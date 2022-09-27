@@ -23,5 +23,13 @@ Route::get('/', function () {
         Route::post('book/store','store')->name('book.store');
         Route::get('book/show','index')->name('book.index');
         Route::get('book/edit/{book_id}','edit');
-        Route::post('book/update','update')->name('book.update');
+        Route::post('book/update/{book_id}','update')->name('book.update');
+    });
+
+    Route::controller(\App\Http\Controllers\PostController::class)->prefix('post')->group(function (){
+        Route::get('create','create')->name('post.create');
+        Route::post('store','store')->name('post.store');
+        Route::get('index','index')->name('showdata');
+        Route::get('edit/{post_id}','edit')->name('post.edit');
+        Route::post('update/{post_id}','update')->name('post.update');
     });

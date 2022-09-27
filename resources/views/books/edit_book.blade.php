@@ -9,11 +9,11 @@
     @endif
     <div class="card mt-3">
         <div class="card-header bg-danger">
-           Edit NEW BOOK
+           Edit  BOOK
         </div>
         <div class="card-body">
             <h4 class="card-title">{{__('messages.Book Details')}}</h4>
-            <form method="post" action="{{url('book/update/'.$book->id)}}">
+            <form method="post" action="{{route('book.update',$book->id)}}">
                 @csrf
                 <div class="row">
                     <div class="col">

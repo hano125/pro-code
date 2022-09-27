@@ -16,11 +16,11 @@ class BookController extends Controller
      */
     public function index()
     {
-       $books=Book::select('id','book_date','book_name_'.LaravelLocalization::getCurrentLocale().' as name',
+       $book=Book::select('id','book_date','book_name_'.LaravelLocalization::getCurrentLocale().' as name',
        'book_author_name_' .LaravelLocalization::getCurrentLocale(). ' as author',
            'book_author_decs_' .LaravelLocalization::getCurrentLocale(). ' as decs'
        )->get();
-        return view('books.index',compact('books'));
+        return view('books.index',compact('book'));
     }
 
     /**
@@ -90,12 +90,10 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $book_id)
+    public function update(Request $request,$book_id)
     {
         //chk the item is already exist or not
-        $book=Book::find($book_id);
-        if(!$book)
-            return redirect()->back();
+        $book=Book::findOrFail($book_id);
 
         $book->update($request->all());
         return redirect()->back()->with('status',"Update data successfully");

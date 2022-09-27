@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $post=Post::all();
+        return view('posts.show_post',compact('post'));
     }
 
     /**
@@ -24,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.add_post');
     }
 
     /**
@@ -35,7 +36,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Post::create([
+            'name_ar'=>$request->name_ar,
+            'name_en'=>$request->name_en,
+            'details_ar'=>$request->details_ar,
+            'details_en'=>$request->details_en,
+        ]);
+        return response('added successfully');
     }
 
     /**
@@ -53,11 +60,12 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Post $post)
+    public function edit($post_id)
     {
-        //
+        $post=Post::find($post_id);
+        return view('posts.edit_post',compact('post'));
     }
 
     /**
@@ -67,9 +75,17 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $post_id)
     {
-        //
+        $posts=Post::findOrFail($post_id);
+            $posts->update([
+                'name_ar'=>$request->name_ar,
+                'name_en'=>$request->name_en,
+                'details_ar'=>$request->details_ar,
+                'details_en'=>$request->details_en
+            ]);
+            return redirect()->route('showdata');
+
     }
 
     /**
